@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>azz3y's page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'MS Sans Serif', 'Microsoft Sans Serif', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            background-image:
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.03"><rect width="100" height="100" fill="%230a0a0a"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="%23333" stroke-width="1"/></svg>');
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .desktop-icon {
+            position: absolute;
+            width: 70px;
+            text-align: center;
+            color: #888;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 5px;
+        }
+
+        .desktop-icon:nth-child(1) { top: 20px; left: 30px; }
+        .desktop-icon:nth-child(2) { top: 100px; left: 30px; }
+        .desktop-icon:nth-child(3) { bottom: 100px; left: 30px; }
+        .desktop-icon:nth-child(4) { top: 20px; right: 30px; }
+        .desktop-icon:nth-child(5) { top: 100px; right: 30px; }
+
+        .desktop-icon:hover {
+            background-color: rgba(100, 100, 100, 0.2);
+            color: #ccc;
+        }
+
+        .desktop-icon i {
+            font-size: 32px;
+            margin-bottom: 5px;
+            display: block;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .desktop-icon:hover i {
+            color: #999;
+        }
+
+        .window {
+            width: 100%;
+            max-width: 500px;
+            background-color: #c0c0c0;
+            border: 2px outset #c0c0c0;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+            position: relative;
+        }
+
+        .title-bar {
+            background: linear-gradient(90deg, #404040, #606060);
+            color: #ccc;
+            padding: 4px 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            font-weight: bold;
+            position: relative;
+            border-bottom: 1px solid #808080;
+        }
+
+        .title-bar::before {
+            content: "";
+            position: absolute;
+            left: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            background-color: #808080;
+            border: 1px inset #c0c0c0;
+        }
+
+        .title-bar-text {
+            margin-left: 22px;
+        }
+
+        .title-bar-controls {
+            display: flex;
+        }
+
+        .title-bar-button {
+            width: 18px;
+            height: 16px;
+            margin-left: 2px;
+            background-color: #c0c0c0;
+            border: 1px outset #c0c0c0;
+            text-align: center;
+            line-height: 14px;
+            font-size: 10px;
+            font-weight: bold;
+            color: #000;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .title-bar-button:hover {
+            background-color: #d0d0d0;
+        }
+
+        .title-bar-button:active {
+            border: 1px inset #c0c0c0;
+        }
+
+        .window-content {
+            padding: 20px;
+            background: #c0c0c0;
+        }
+
+        .profile-section {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px outset #c0c0c0;
+        }
+
+        .profile-pic-container {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 15px;
+            border: 2px inset #c0c0c0;
+            background: #d0d0d0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-pic {
+            width: 90px;
+            height: 90px;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background-image: url('https://avatars.githubusercontent.com/u/168784613?v=4');
+            background-size: cover;
+            background-position: center;
+            filter: grayscale(0.3) contrast(1.1) brightness(0.9);
+        }
+
+        .profile-name {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .profile-bio {
+            font-size: 12px;
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .stat {
+            text-align: center;
+            transition: all 0.3s ease;
+            padding: 5px;
+        }
+
+        .stat:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-value {
+            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            color: #666;
+        }
+
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .link-button {
+            background-color: #c0c0c0;
+            border: 2px outset #c0c0c0;
+            padding: 10px 15px;
+            text-align: left;
+            cursor: pointer;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .link-button:hover {
+            background-color: #d0d0d0;
+        }
+
+        .link-button:active {
+            border: 2px inset #c0c0c0;
+        }
+
+        .link-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+            background-color: #c0c0c0;
+            border: 1px outset #c0c0c0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #333;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .link-button:hover .link-icon {
+            background-color: #d0d0d0;
+        }
+
+        .link-text {
+            flex-grow: 1;
+        }
+
+        .link-description {
+            font-size: 10px;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 10px;
+            color: #666;
+            padding-top: 10px;
+            border-top: 1px outset #c0c0c0;
+        }
+
+        .taskbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #c0c0c0;
+            border-top: 2px outset #c0c0c0;
+            display: flex;
+            align-items: center;
+            padding: 3px;
+            height: 30px;
+            z-index: 100;
+        }
+
+        .start-button {
+            background-color: #c0c0c0;
+            border: 2px outset #c0c0c0;
+            padding: 3px 10px;
+            font-weight: bold;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-right: 5px;
+            transition: all 0.2s ease;
+        }
+
+        .start-button:hover {
+            background-color: #d0d0d0;
+        }
+
+        .start-button:active {
+            border: 2px inset #c0c0c0;
+        }
+
+        .start-button i {
+            margin-right: 5px;
+            font-size: 12px;
+        }
+
+        .taskbar-apps {
+            display: flex;
+            gap: 3px;
+        }
+
+        .taskbar-app {
+            background-color: #c0c0c0;
+            border: 2px outset #c0c0c0;
+            padding: 3px 8px;
+            font-size: 11px;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 150px;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+
+        .taskbar-app i {
+            margin-right: 4px;
+            font-size: 11px;
+        }
+
+        .taskbar-app.active {
+            border: 2px inset #c0c0c0;
+        }
+
+        .taskbar-app:hover {
+            background-color: #d0d0d0;
+        }
+
+        .clock {
+            margin-left: auto;
+            padding: 2px 6px;
+            border: 1px inset #c0c0c0;
+            font-size: 11px;
+            background-color: #c0c0c0;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 5px;
+            margin-top: 15px;
+            justify-content: flex-end;
+        }
+
+        .window-control {
+            background-color: #c0c0c0;
+            border: 2px outset #c0c0c0;
+            padding: 4px 8px;
+            font-size: 11px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+
+        .window-control i {
+            margin-right: 4px;
+            font-size: 11px;
+        }
+
+        .window-control:hover {
+            background-color: #d0d0d0;
+        }
+
+        .window-control:active {
+            border: 2px inset #c0c0c0;
+        }
+
+        /* Media Player Window Styles - Bottom Left */
+        .media-player-window {
+            position: fixed;
+            bottom: 40px; /* Position above taskbar */
+            left: 10px;
+            width: 350px;
+            background-color: #c0c0c0;
+            border: 2px outset #c0c0c0;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            display: none;
+        }
+
+        .media-player-content {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .soundcloud-player {
+            width: 100%;
+            height: 166px;
+            border: 1px inset #c0c0c0;
+            margin: 10px 0;
+        }
+
+        .player-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .player-button {
+            background-color: #c0c0c0;
+            border: 2px outset #c0c0c0;
+            padding: 5px 10px;
+            font-size: 11px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .player-button:hover {
+            background-color: #d0d0d0;
+        }
+
+        .player-button:active {
+            border: 2px inset #c0c0c0;
+        }
+
+        /* Responsive design */
+        @media (max-width: 600px) {
+            .desktop-icon {
+                display: none;
+            }
+
+            .window {
+                max-width: 95%;
+            }
+
+            .stats {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .media-player-window {
+                width: 95%;
+                left: 2.5%;
+                bottom: 45px;
+            }
+            .floating-pic {
+              position: fixed;
+              width: 100px;
+              height: 100px;
+              z-index: 9999;
+              cursor: move;
+              border: 2px outset #c0c0c0;
+              background-size: cover;
+              background-position: center;
+              box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            }
+
+            .floating-pic:hover {
+              border-color: #808080;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-pic" id="floatingPic" style="top: 100px; left: 100px;"></div>
+
+    <!-- Main Window -->
+    <div class="window">
+        <div class="title-bar">
+            <div class="title-bar-text">azz3y</div>
+            <div class="title-bar-controls">
+                <button class="title-bar-button">_</button>
+                <button class="title-bar-button">□</button>
+                <button class="title-bar-button">×</button>
+            </div>
+        </div>
+
+        <div class="window-content">
+            <div class="profile-section">
+                <div class="profile-pic-container">
+                    <div class="profile-pic"></div>
+                </div>
+                <div class="profile-name">إبتهاج</div>
+                <div class="profile-bio">they/she • art & music enthusiast</div>
+
+            </div>
+
+            <div class="links-container">
+                <button class="link-button" onclick="window.open('https://tumblr.com/whoisazzey', '_blank')">
+                    <div class="link-icon">
+                        <i class="fab fa-tumblr"></i>
+                    </div>
+                    <div class="link-text">
+                        <div>Tumblr</div>
+                        <div class="link-description">blog</div>
+                    </div>
+                </button>
+
+                <button class="link-button" onclick="window.open('https://instagram.com/azzey.m4a', '_blank')">
+                    <div class="link-icon">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <div class="link-text">
+                        <div>Instagram</div>
+                        <div class="link-description">i'll post one day, i swear</div>
+                    </div>
+                </button>
+
+                <button class="link-button" onclick="window.open('https://soundcloud.com/azzeym4a', '_blank')">
+                    <div class="link-icon">
+                        <i class="fab fa-soundcloud"></i>
+                    </div>
+                    <div class="link-text">
+                        <div>SoundCloud</div>
+                        <div class="link-description">music</div>
+                    </div>
+                </button>
+
+                <button class="link-button" onclick="window.open('https://azzey.bandcamp.com', '_blank')">
+                    <div class="link-icon">
+                        <i class="fab fa-bandcamp"></i>
+                    </div>
+                    <div class="link-text">
+                        <div>Bandcamp</div>
+                        <div class="link-description">music (again)</div>
+                    </div>
+                </button>
+
+                <button class="link-button" onclick="window.open('https://www.youtube.com/watch?v=xvFZjo5PgG0', '_blank')">
+                    <div class="link-icon">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <div class="link-text">
+                        <div>YouTube</div>
+                        <div class="link-description">we hope one day</div>
+                    </div>
+                </button>
+            </div>
+
+            <div class="window-controls">
+                <button class="window-control" onclick="alert('Settings would open here')">
+                    <i class="fas fa-cog"></i> Settings
+                </button>
+                <button class="window-control" onclick="alert('Help would appear here')">
+                    <i class="fas fa-question-circle"></i> Help
+                </button>
+                <button class="window-control" onclick="window.print()">
+                    <i class="fas fa-print"></i> Print
+                </button>
+            </div>
+
+            <div class="footer">
+                © 2025
+            </div>
+        </div>
+    </div>
+
+    <!-- Media Player Window - Bottom Left -->
+    <div class="media-player-window" id="mediaPlayer">
+        <div class="title-bar">
+            <div class="title-bar-text">media player</div>
+            <div class="title-bar-controls">
+                <button class="title-bar-button" onclick="closeMediaPlayer()">×</button>
+            </div>
+        </div>
+        <div class="media-player-content">
+            <h3>music</h3>
+            <iframe width="100%" height="450" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/soundcloud%253Aplaylists%253A1993148668&color=%23ff5500&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/azzey_m4a" title="azzey" target="_blank" style="color: #cccccc; text-decoration: none;">azzey</a> · <a href="https://soundcloud.com/azzey_m4a/sets/wanderlust" title="Wanderlust" target="_blank" style="color: #cccccc; text-decoration: none;">Wanderlust</a></div>
+            <div class="player-controls">
+                <button class="player-button" onclick="openSoundCloud()">
+                    <i class="fab fa-soundcloud"></i> Open in SoundCloud
+                </button>
+                <button class="player-button" onclick="closeMediaPlayer()">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Taskbar -->
+    <div class="taskbar">
+        <button class="start-button">
+            <i class="fas fa-play"></i>
+            <span>Start</span>
+        </button>
+        <div class="taskbar-apps">
+            <div class="taskbar-app active">
+                <i class="fas fa-user"></i> My Links
+            </div>
+            <div class="taskbar-app" id="mediaPlayerBtn">
+                <i class="fas fa-music"></i> Media Player
+            </div>
+        </div>
+        <div class="clock" id="clock">10:41 AM</div>
+    </div>
+
+    <script>
+        // Update clock
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+
+            document.getElementById('clock').textContent = `${hours}:${minutes} ${ampm}`;
+        }
+
+        updateClock();
+        setInterval(updateClock, 60000);
+
+        // Taskbar app switching
+        const taskbarApps = document.querySelectorAll('.taskbar-app');
+        taskbarApps.forEach(app => {
+            app.addEventListener('click', function() {
+                taskbarApps.forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+
+                // Open media player when Media Player is clicked
+                if (this.id === 'mediaPlayerBtn') {
+                    openMediaPlayer();
+                }
+            });
+        });
+
+        // Desktop icon interactions
+        const desktopIcons = document.querySelectorAll('.desktop-icon');
+        desktopIcons.forEach(icon => {
+            icon.addEventListener('dblclick', function() {
+                alert(`Opening ${this.textContent.trim()}...`);
+            });
+        });
+
+        // Start menu functionality
+        const startButton = document.querySelector('.start-button');
+        startButton.addEventListener('click', function() {
+            alert('Start menu would appear here');
+        });
+
+        // Media Player Functions
+        function openMediaPlayer() {
+            document.getElementById('mediaPlayer').style.display = 'block';
+        }
+
+        function closeMediaPlayer() {
+            document.getElementById('mediaPlayer').style.display = 'none';
+        }
+
+        function openSoundCloud() {
+            window.open('https://soundcloud.com', '_blank');
+        }
+
+        // Close media player when clicking outside of it
+        document.addEventListener('click', function(event) {
+            const mediaPlayer = document.getElementById('mediaPlayer');
+            if (event.target === mediaPlayer) {
+                closeMediaPlayer();
+            }
+        });
+        // Make the picture draggable
+        let isDragging = false;
+        let currentX;
+        let currentY;
+        let initialX;
+        let initialY;
+        let xOffset = 0;
+        let yOffset = 0;
+
+        const floatingPic = document.getElementById('floatingPic');
+
+        // Set the image (replace with your image URL)
+        floatingPic.style.backgroundImage = "url('https://cdn.discordapp.com/attachments/1438788176415293595/1438991093604814889/Sans_titre_561_20251114213629.png?ex=6918e463&is=691792e3&hm=59c2c6cabdde17e481c04a4414398a9288bf80b426ab69cdf12f55710393a86a&')";
+
+        floatingPic.addEventListener("mousedown", dragStart);
+        floatingPic.addEventListener("mouseup", dragEnd);
+        floatingPic.addEventListener("mousemove", drag);
+
+        function dragStart(e) {
+          initialX = e.clientX - xOffset;
+          initialY = e.clientY - yOffset;
+
+          if (e.target === floatingPic) {
+        isDragging = true;
+      }
+    }
+
+    function dragEnd(e) {
+      initialX = currentX;
+      initialY = currentY;
+
+      isDragging = false;
+    }
+
+    function drag(e) {
+      if (isDragging) {
+          e.preventDefault();
+          currentX = e.clientX - initialX;
+          currentY = e.clientY - initialY;
+
+          xOffset = currentX;
+          yOffset = currentY;
+
+          setTranslate(currentX, currentY, floatingPic);
+        }
+      }
+
+      function setTranslate(xPos, yPos, el) {
+        el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
+      }
+    </script>
+</body>
+</html>
